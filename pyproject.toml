@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ocote"
+version = "0.1.0"
+description = "OCOTE (Observation Control & Orientation Tool for Exposures): diagnostic tools to validate Vera C. Rubin Observatory / LSST observations for strong lensing source detection"
+readme = "README.md"
+license = { file = "LICENSE.txt" }
+requires-python = ">=3.10"
+
+authors = [
+    { name = "Alma Xochitl Gonzalez Morales", email = "gonzalez.alma@ugto.mx" },
+    { name = "Armando Estrada Roque", email = "arestrada@fisica.uaz.edu.mx" },
+    { name = "Emmanuel Juda Rodriguez Nachez", email = "ej.rodrigueznachez@ugto.mx" },
+]
+
+dependencies = [
+    "numpy",
+    "matplotlib",
+    "astropy",
+    "pandas",
+    "cycler",
+]
+
+# The LSST Science Pipelines (the `lsst.*` modules imported throughout this
+# package: daf.butler, afw, geom, pipe.base, pipe.tasks, drp.tasks, skymap,
+# source.injection, utils) are NOT distributed on PyPI and are intentionally
+# not listed here. Install them separately -- see docs/installation.md.
+
+[project.urls]
+Repository = "https://github.com/emdajhuda/OCOTE"
+
+[tool.setuptools.packages.find]
+where = ["src"]
