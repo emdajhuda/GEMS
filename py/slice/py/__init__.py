@@ -1,1 +1,1 @@
-# shortcuts/__init__.py
+# py/__init__.py

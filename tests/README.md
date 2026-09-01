@@ -1,7 +1,7 @@
 # Tests
 
 No automated tests exist yet. This directory is scaffolding so they can be added
-coherently, mirroring the layout of [`src/ocote/`](../src/ocote/), e.g.:
+coherently, mirroring the layout of [`py/slice/`](../py/slice/), e.g.:
 
 ```
 tests/
@@ -10,9 +10,9 @@ tests/
 │   └── test_custom_inject_coadd.py
 ├── coherentinjection/
 │   └── test_injection.py
-├── shortcuts/
-│   ├── test_exposure_sh.py
-│   └── test_visit_sh.py
+├── py/
+│   ├── test_exposure.py
+│   └── test_visit_selection.py
 └── utils/
     ├── test_butler.py
     ├── test_fits.py
@@ -24,7 +24,7 @@ tests/
 
 Most of this package's functions call into the LSST Science Pipelines (`lsst.daf.butler`,
 `lsst.afw`, ...), so tests will generally need either a small local Butler repository
-fixture (see `ocote.LocalButler`) or mocks around the `lsst.*` calls. A suggested,
+fixture (see `slice.LocalButler`) or mocks around the `lsst.*` calls. A suggested,
 not-yet-wired starting point once tests exist:
 
 ```bash

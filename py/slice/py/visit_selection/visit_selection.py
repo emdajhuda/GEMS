@@ -1,5 +1,5 @@
-# vera rubin v1.0
-# visit.visit.py
+# slice v1.0
+# visit_selection.visit_selection.py
 # IMPORTANT: The visit IDs (visit.id) must be unique across bands.
 
 import os, sys
@@ -9,7 +9,7 @@ import numpy as np
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from ...utils.sky.sky import tract_patch, patch_center
 
-class VisitSH():
+class VisitSL():
     """ 
     Class to query visits based on sky coordinates or tract/patch.
     """
@@ -418,14 +418,14 @@ def visit_dataset(
 
     if butler:
         # Use an existing Butler
-        visit_obj = Visit(
+        visit_obj = VisitSL(
             loc_data=loc_data,
             butler=butler,
             band=band,
         )
     elif repository:
         # Use a repository path
-        visit_obj = Visit(
+        visit_obj = VisitSL(
             loc_data=loc_data,
             repository=repository,
             band=band,

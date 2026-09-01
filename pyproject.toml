@@ -3,9 +3,9 @@ requires = ["setuptools>=61"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "ocote"
+name = "slice"
 version = "0.1.0"
-description = "OCOTE (Observation Control & Orientation Tool for Exposures): diagnostic tools to validate Vera C. Rubin Observatory / LSST observations for strong lensing source detection"
+description = "SLICE (SeLection Imaging Coadd Engine): diagnostic tools to validate Vera C. Rubin Observatory / LSST observations for strong lensing source detection"
 readme = "README.md"
 license = { file = "LICENSE.txt" }
 requires-python = ">=3.10"
@@ -30,7 +30,7 @@ dependencies = [
 # not listed here. Install them separately -- see docs/installation.md.
 
 [project.urls]
-Repository = "https://github.com/emdajhuda/OCOTE"
+Repository = "https://github.com/emdajhuda/SLICE"
 
 [tool.setuptools.packages.find]
-where = ["src"]
+where = ["py"]

@@ -11,7 +11,7 @@ from lsst.pipe.base import Pipeline
 
 # Add the project root to the Python path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-from ..shortcuts.visit_sh.visit_sh import VisitSH, combine_visits_selected
+from ..py.visit_selection.visit_selection import VisitSL, combine_visits_selected
 from ..utils.sky.sky import tract_patch
 from ..utils.plot.butler_plot import filt_plot
 from ..utils.tools.tools import get_butler_location
@@ -106,7 +106,7 @@ def custom_coadd_filter(loc_data: tuple,
     # ----------------------------
     visits_selected_list, df_metrics_list = [], []
     for band in bands:
-        visit_instance = VisitSH(loc_data, band, butler=butler, sky_coordinates=sky_coordinates)
+        visit_instance = VisitSL(loc_data, band, butler=butler, sky_coordinates=sky_coordinates)
         df_metrics, visits_selected = visit_instance.filt_visit(
             statistics=statistics,
             type_coadd=type_coadd,

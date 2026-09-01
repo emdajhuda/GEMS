@@ -1,4 +1,4 @@
-# verarubin/__init__.py
+# slice/__init__.py
 
 #CoaddMaker
 
@@ -12,9 +12,9 @@ from .coherentinjection.injection import make_serializable, measure_quality, cre
 
 #Shortcuts
 # exposure
-from .shortcuts.exposure_sh.exposure_sh import load_exposures, save_exposure, normalize_exposures, exposure_to_fits_datahdr, cutout_exposure
+from .py.exposure.exposure import load_exposures, save_exposure, normalize_exposures, exposure_to_fits_datahdr, cutout_exposure
 # Visit
-from .shortcuts.visit_sh.visit_sh import VisitSH, combine_visits_selected, visit_dataset
+from .py.visit_selection.visit_selection import VisitSL, combine_visits_selected, visit_dataset
 
 #Utils
 # Butler
@@ -68,5 +68,5 @@ __all__ = [
     # Tools
     'progressbar', 'setup_logger', '_run', 'get_butler_location', 'mjds_to_dates', 'diff_AlardLupton', 'warp_img',
     # Visit
-    'VisitSH', 'combine_visits_selected', 'visit_dataset'
+    'VisitSL', 'combine_visits_selected', 'visit_dataset'
 ]

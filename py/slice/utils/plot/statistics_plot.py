@@ -13,7 +13,7 @@ from lsst.utils.plotting import (get_multiband_plot_colors,
 
 # Add the project root to the Python path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-from ...shortcuts.visit_sh.visit_sh import VisitSH
+from ...py.visit_selection.visit_selection import VisitSL
 from ..sky.sky import tract_patch
 
 ###################################################################################################
@@ -253,7 +253,7 @@ class StatisticsPlots:
             ax = [ax]  # Ensure it's always iterable
 
         for band in bands:  # Choosing the "band"
-            visit_instance = VisitSH(loc_data, band, butler=self.butler)
+            visit_instance = VisitSL(loc_data, band, butler=self.butler)
             visit_selection_data = visit_instance.visit_selection(selection=selection, type_coadd='deep_coadd',
                                                                   n_visits=n_visits, flatten=True)
             for i, name in enumerate(selection):

@@ -21,7 +21,7 @@ from lsst.daf.butler.registry import ConflictingDefinitionError
 # Add the project root to the Python path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from ..utils.sky.sky import patch_center
-from ..shortcuts.visit_sh.visit_sh import visit_dataset
+from ..py.visit_selection.visit_selection import visit_dataset
 
 
 

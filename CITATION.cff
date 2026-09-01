@@ -1,11 +1,11 @@
 cff-version: 1.2.0
 message: >-
-  If you use OCOTE in a project that leads to a publication,
+  If you use SLICE in a project that leads to a publication,
   please cite it as below. Replace the placeholder author
   information with the real details before publishing/tagging
   a release (see docs/science/README.md for the planned
   companion article, which should be added here too once published).
-title: "OCOTE: Observation Control & Orientation Tool for Exposures"
+title: "SLICE: SeLection Imaging Coadd Engine"
 type: software
 authors:
   - family-names: "Gonzalez Morales"
@@ -17,7 +17,7 @@ authors:
   - family-names: "Emmanuel Juda"
     given-names: "Rodriguez Nachez"
     email: "ej.rodrigueznachez@ugto.mx"
-repository-code: "https://github.com/emdajhuda/OCOTE"
+repository-code: "https://github.com/emdajhuda/SLICE"
 license: MIT
 version: 0.1.0
 keywords:

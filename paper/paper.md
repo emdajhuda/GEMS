@@ -1,5 +1,5 @@
 ---
-title: 'OCOTE: Observation Control & Orientation Tool for Exposures'
+title: 'SLICE: SeLection Imaging Coadd Engine'
 tags:
   - Python
   - astronomy
@@ -22,7 +22,7 @@ bibliography: paper.bib
   DRAFT SKELETON — not yet submitted anywhere.
 
   This is a placeholder for a future companion article (targeted, e.g., at the
-  Journal of Open Source Software or a similar venue) describing OCOTE's method
+  Journal of Open Source Software or a similar venue) describing SLICE's method
   and validation in citable, peer-reviewed form. Fill in the sections below as
   the science matures; see docs/science/README.md for the current working
   description of the method, which this paper should expand on rather than
@@ -31,7 +31,7 @@ bibliography: paper.bib
 
 # Summary
 
-OCOTE (Observation Control & Orientation Tool for Exposures) is a Python package
+SLICE (SeLection Imaging Coadd Engine) is a Python package
 for building and validating custom image coadds from Vera C. Rubin Observatory /
 LSST exposures, aimed at characterizing how observing strategy (coadd depth,
 photometric band, PSF size, visit selection) affects the detectability of strong

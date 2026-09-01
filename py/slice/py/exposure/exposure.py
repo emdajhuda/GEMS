@@ -1,4 +1,4 @@
-# vera rubin v1.0
+# slice v1.0
 # exposure.exposure.py
 
 import lsst.geom as geom
