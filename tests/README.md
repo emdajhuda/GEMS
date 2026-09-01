@@ -1,7 +1,7 @@
 # Tests
 
 No automated tests exist yet. This directory is scaffolding so they can be added
-coherently, mirroring the layout of [`py/slice/`](../py/slice/), e.g.:
+coherently, mirroring the layout of [`py/gems/`](../py/gems/), e.g.:
 
 ```
 tests/
@@ -24,7 +24,7 @@ tests/
 
 Most of this package's functions call into the LSST Science Pipelines (`lsst.daf.butler`,
 `lsst.afw`, ...), so tests will generally need either a small local Butler repository
-fixture (see `slice.LocalButler`) or mocks around the `lsst.*` calls. A suggested,
+fixture (see `gems.LocalButler`) or mocks around the `lsst.*` calls. A suggested,
 not-yet-wired starting point once tests exist:
 
 ```bash

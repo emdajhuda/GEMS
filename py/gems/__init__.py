@@ -1,4 +1,4 @@
-# slice/__init__.py
+# gems/__init__.py
 
 #CoaddMaker
 

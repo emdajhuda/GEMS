@@ -9,11 +9,11 @@
 </a>
 </p>
 
-# SLICE — SeLection Imaging Coadd Engine
+# GEMS — Galaxy Exposure Metrics for Strong-lensing
 
 <img align="right" width="25%" src="docs/assets/image.png">
 
-**SLICE** is a Python toolkit for building and validating custom image coadds from
+**GEMS** is a Python toolkit for building and validating custom image coadds from
 [Vera C. Rubin Observatory / LSST](https://www.lsst.org) exposures, with a focus on
 diagnosing how observing strategy (depth, band, PSF size, visit selection, ...) affects
 the detectability of strong-lensing sources. It wraps the LSST Science Pipelines'
@@ -28,7 +28,7 @@ our work by citing it — see [Citation](#citation) below.
 
 ## Contents
 
-- [What SLICE does](#what-slice-does)
+- [What GEMS does](#what-gems-does)
 - [Project layout](#project-layout)
 - [Dependencies](#dependencies)
 - [Installation](#installation)
@@ -37,31 +37,31 @@ our work by citing it — see [Citation](#citation) below.
 - [Citation](#citation)
 - [Contact](#contact)
 
-## What SLICE does
+## What GEMS does
 
-SLICE identifies metrics that let us estimate the probability of detecting strong-lensing
+GEMS identifies metrics that let us estimate the probability of detecting strong-lensing
 (SL) sources as a function of coadd depth (number of combined exposures / exposure time),
 sky location, photometric band, and PSF size, among other observing conditions. It is
 organized in four layers (see [docs/architecture.md](docs/architecture.md) for a diagram):
 
-1. **Data access** (`slice.utils.butler`) — thin wrappers around the LSST `Butler` for
+1. **Data access** (`gems.utils.butler`) — thin wrappers around the LSST `Butler` for
    remote and local repositories.
-2. **Selection helpers** (`slice.py`) — convenience functions to select, load, and
+2. **Selection helpers** (`gems.py`) — convenience functions to select, load, and
    combine visits and exposures.
-3. **Core processing** (`slice.coaddmaker`, `slice.coherentinjection`) — custom coadd
+3. **Core processing** (`gems.coaddmaker`, `gems.coherentinjection`) — custom coadd
    construction, leave-one-out/rotation validation, and synthetic source injection.
-4. **Diagnostics** (`slice.utils.plot`) — plotting utilities for exposures, coadds,
+4. **Diagnostics** (`gems.utils.plot`) — plotting utilities for exposures, coadds,
    statistics, and injection results.
 
-`slice.utils.sky`, `slice.utils.fits`, `slice.utils.tools`, and `slice.utils.warp`
+`gems.utils.sky`, `gems.utils.fits`, `gems.utils.tools`, and `gems.utils.warp`
 provide supporting sky/WCS math, FITS I/O, general helpers, and image warping used
 across the layers above.
 
 ## Project layout
 
 ```
-SLICE/
-├── py/slice/            # the installable package (import as `import slice`)
+GEMS/
+├── py/gems/            # the installable package (import as `import gems`)
 │   ├── coaddmaker/       # custom coadd construction, injection-aware pipelines
 │   ├── coherentinjection/  # synthetic strong-lensing source injection
 │   ├── py/               # visit/exposure selection convenience layer
@@ -71,7 +71,7 @@ SLICE/
 ├── examples/            # tutorial notebooks and sample data (see below)
 ├── docs/                # installation guide, architecture diagram, science background
 ├── paper/               # draft of a companion scientific article (see below)
-└── tests/               # test suite (mirrors py/slice/, see tests/README.md)
+└── tests/               # test suite (mirrors py/gems/, see tests/README.md)
 ```
 
 This follows the conventional `src/`-layout used by most scientific Python packages
@@ -90,7 +90,7 @@ Installed automatically via `pip`:
 - [cycler](https://matplotlib.org/cycler/)
 
 > [!IMPORTANT]
-> SLICE also requires the **LSST Science Pipelines** (the `lsst.*` modules: `daf.butler`,
+> GEMS also requires the **LSST Science Pipelines** (the `lsst.*` modules: `daf.butler`,
 > `afw`, `geom`, `pipe.base`, `pipe.tasks`, `drp.tasks`, `skymap`, `source.injection`,
 > `utils`). These are **not distributed on PyPI** and must be installed separately, or
 > used from an environment that already provides them — see
@@ -111,11 +111,11 @@ Quick start (full walkthrough with troubleshooting notes in
 2. **Clone this repository** into that environment:
 
    ```bash
-   git clone https://github.com/emdajhuda/SLICE.git slice
-   cd slice
+   git clone https://github.com/emdajhuda/GEMS.git gems
+   cd gems
    ```
 
-3. **Install SLICE and its Python dependencies** in editable mode:
+3. **Install GEMS and its Python dependencies** in editable mode:
 
    ```bash
    pip install -e .
@@ -124,7 +124,7 @@ Quick start (full walkthrough with troubleshooting notes in
 4. **Verify the installation:**
 
    ```bash
-   python -c "import slice; print(slice.__name__, 'OK')"
+   python -c "import gems; print(gems.__name__, 'OK')"
    ```
 
 5. Open any notebook under [`examples/`](examples/) to get started.
@@ -148,7 +148,7 @@ Sample postage-stamp FITS images used by these notebooks live under
 
 ## Scientific background
 
-SLICE grew out of exploring PSF size and ellipticity as predictors of strong-lensing
+GEMS grew out of exploring PSF size and ellipticity as predictors of strong-lensing
 source detectability. A short summary of the method (PSF construction, moments of the
 intensity distribution, etc.) lives in [`docs/science/`](docs/science/); a full,
 citable scientific description and companion article are planned and will be added
@@ -156,13 +156,13 @@ there and in [`paper/`](paper/) as the project matures.
 
 ## Citation
 
-If SLICE contributes to a project that leads to a publication, please cite it. Machine-
+If GEMS contributes to a project that leads to a publication, please cite it. Machine-
 readable metadata lives in [`CITATION.cff`](CITATION.cff) (GitHub renders a "Cite this
 repository" button from it), and the current release can be cited as:
 
-> Gonzalez Morales, A. X., Estrada Roque, A., & Rodriguez Nachez, E. J. *SLICE:
-> SeLection Imaging Coadd Engine* (Version 0.1.0) [Computer
-> software]. https://github.com/emdajhuda/SLICE
+> Gonzalez Morales, A. X., Estrada Roque, A., & Rodriguez Nachez, E. J. *GEMS:
+> Galaxy Exposure Metrics for Strong-lensing* (Version 0.1.0) [Computer
+> software]. https://github.com/emdajhuda/GEMS
 
 A citable companion article is planned — see [Scientific background](#scientific-background)
 and [`docs/science/README.md`](docs/science/README.md) — and will be added to

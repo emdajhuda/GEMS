@@ -2,7 +2,7 @@
 
 > **Status:** early draft. This page carries over the methodology notes from the
 > project's original README so they are not lost, and is meant to grow into a full
-> scientific description of SLICE as the method matures — in step with the companion
+> scientific description of GEMS as the method matures — in step with the companion
 > article drafted in [`paper/`](../../paper/).
 
 ## Motivation

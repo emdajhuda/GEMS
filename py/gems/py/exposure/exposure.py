@@ -1,4 +1,4 @@
-# slice v1.0
+# gems v1.0
 # exposure.exposure.py
 
 import lsst.geom as geom

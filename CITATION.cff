@@ -1,11 +1,11 @@
 cff-version: 1.2.0
 message: >-
-  If you use SLICE in a project that leads to a publication,
+  If you use GEMS in a project that leads to a publication,
   please cite it as below. Replace the placeholder author
   information with the real details before publishing/tagging
   a release (see docs/science/README.md for the planned
   companion article, which should be added here too once published).
-title: "SLICE: SeLection Imaging Coadd Engine"
+title: "GEMS: Galaxy Exposure Metrics for Strong-lensing"
 type: software
 authors:
   - family-names: "Gonzalez Morales"
@@ -17,7 +17,7 @@ authors:
   - family-names: "Emmanuel Juda"
     given-names: "Rodriguez Nachez"
     email: "ej.rodrigueznachez@ugto.mx"
-repository-code: "https://github.com/emdajhuda/SLICE"
+repository-code: "https://github.com/emdajhuda/GEMS"
 license: MIT
 version: 0.1.0
 keywords:

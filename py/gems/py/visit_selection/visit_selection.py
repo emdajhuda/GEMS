@@ -1,4 +1,4 @@
-# slice v1.0
+# gems v1.0
 # visit_selection.visit_selection.py
 # IMPORTANT: The visit IDs (visit.id) must be unique across bands.
 
