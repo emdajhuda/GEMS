@@ -4,8 +4,6 @@
 import os, sys
 from lsst.daf.butler import Butler  #  modules for data access via the Butler
 
-# Add the project root to the Python path
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from ..plot.statistics_plot import StatisticsPlots
 
 ###################################################################################################

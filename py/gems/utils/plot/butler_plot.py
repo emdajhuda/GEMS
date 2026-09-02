@@ -6,8 +6,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import os, sys
 
-# Add the project root to the Python path
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from .coadd_plot import plot_original_coadd, plot_custom_coadd
 
 ###################################################################################################

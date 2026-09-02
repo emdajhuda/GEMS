@@ -11,8 +11,6 @@ from astropy.time import Time
 from lsst.utils.plotting import (get_multiband_plot_colors,
                                          get_multiband_plot_linestyles)
 
-# Add the project root to the Python path
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from ...py.visit_selection.visit_selection import VisitSL
 from ..sky.sky import tract_patch
 

@@ -9,8 +9,6 @@ from lsst.daf.butler import Butler
 from lsst.pipe.base.simple_pipeline_executor import SimplePipelineExecutor
 from lsst.pipe.base import Pipeline
 
-# Add the project root to the Python path
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from ..py.visit_selection.visit_selection import VisitSL, combine_visits_selected
 from ..utils.sky.sky import tract_patch
 from ..utils.plot.butler_plot import filt_plot

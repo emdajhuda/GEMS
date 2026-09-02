@@ -18,8 +18,6 @@ from astropy.io import fits
 from lsst.daf.butler import Butler
 from lsst.daf.butler.registry import ConflictingDefinitionError
 
-# Add the project root to the Python path
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from ..utils.sky.sky import patch_center
 from ..py.visit_selection.visit_selection import visit_dataset
 

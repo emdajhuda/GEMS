@@ -15,8 +15,6 @@ from lsst.daf.butler import Butler, DatasetRef, DatasetType, CollectionType
 from collections import defaultdict
 from pathlib import Path
 
-# Add the project root to the Python path
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from ...py.visit_selection.visit_selection import visit_dataset
 from ..tools.tools import setup_logger
 

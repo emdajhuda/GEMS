@@ -6,8 +6,6 @@ import subprocess
 
 from lsst.daf.butler import Butler, DatasetType, CollectionType
 
-# Add the project root to the Python path
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from ..tools.tools import setup_logger, _run
 
 class LocalButler:
