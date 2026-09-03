@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "gems"
 version = "0.1.0"
-description = "GEMS (Galaxy Exposure Metrics for Strong-lensing): diagnostic tools to validate Vera C. Rubin Observatory / LSST observations for strong lensing source detection"
+description = "GEMS (Good-Exposure Metric Selection for strong-lensing coadds): diagnostic tools to validate Vera C. Rubin Observatory / LSST observations for strong lensing source detection"
 readme = "README.md"
 license = { file = "LICENSE.txt" }
 requires-python = ">=3.10"
@@ -14,6 +14,7 @@ authors = [
     { name = "Alma Xochitl Gonzalez Morales", email = "gonzalez.alma@ugto.mx" },
     { name = "Armando Estrada Roque", email = "arestrada@fisica.uaz.edu.mx" },
     { name = "Emmanuel Juda Rodriguez Nachez", email = "ej.rodrigueznachez@ugto.mx" },
+    { name = "Karla Adriana Alamo Martinez", email = "alrakomala@gmail.com" },
 ]
 
 dependencies = [

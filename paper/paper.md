@@ -1,5 +1,5 @@
 ---
-title: 'GEMS: Galaxy Exposure Metrics for Strong-lensing'
+title: 'GEMS: Good-Exposure Metric Selection for strong-lensing coadds'
 tags:
   - Python
   - astronomy
@@ -31,7 +31,7 @@ bibliography: paper.bib
 
 # Summary
 
-GEMS (Galaxy Exposure Metrics for Strong-lensing) is a Python package
+GEMS (Good-Exposure Metric Selection for strong-lensing coadds) is a Python package
 for building and validating custom image coadds from Vera C. Rubin Observatory /
 LSST exposures, aimed at characterizing how observing strategy (coadd depth,
 photometric band, PSF size, visit selection) affects the detectability of strong

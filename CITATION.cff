@@ -5,7 +5,7 @@ message: >-
   information with the real details before publishing/tagging
   a release (see docs/science/README.md for the planned
   companion article, which should be added here too once published).
-title: "GEMS: Galaxy Exposure Metrics for Strong-lensing"
+title: "GEMS: Good-Exposure Metric Selection for strong-lensing coadds"
 type: software
 authors:
   - family-names: "Gonzalez Morales"
@@ -17,6 +17,9 @@ authors:
   - family-names: "Emmanuel Juda"
     given-names: "Rodriguez Nachez"
     email: "ej.rodrigueznachez@ugto.mx"
+  - family-names: "Alamo Martinez"
+    given-names: "Karla Adriana"
+    email: "alrakomala@gmail.com"
 repository-code: "https://github.com/emdajhuda/GEMS"
 license: MIT
 version: 0.1.0

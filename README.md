@@ -9,7 +9,7 @@
 </a>
 </p>
 
-# GEMS — Galaxy Exposure Metrics for Strong-lensing
+# GEMS — Good-Exposure Metric Selection for strong-lensing coadds
 
 <img align="right" width="25%" src="docs/assets/image.png">
 
@@ -160,8 +160,8 @@ If GEMS contributes to a project that leads to a publication, please cite it. Ma
 readable metadata lives in [`CITATION.cff`](CITATION.cff) (GitHub renders a "Cite this
 repository" button from it), and the current release can be cited as:
 
-> Gonzalez Morales, A. X., Estrada Roque, A., & Rodriguez Nachez, E. J. *GEMS:
-> Galaxy Exposure Metrics for Strong-lensing* (Version 0.1.0) [Computer
+> Gonzalez Morales, A. X., Estrada Roque, A., Rodriguez Nachez, E. J., & Alamo Martinez, K. A. *GEMS:
+> Good-Exposure Metric Selection for strong-lensing coadds* (Version 0.1.0) [Computer
 > software]. https://github.com/emdajhuda/GEMS
 
 A citable companion article is planned — see [Scientific background](#scientific-background)
@@ -170,4 +170,4 @@ and [`docs/science/README.md`](docs/science/README.md) — and will be added to
 
 ## Contact
 
-You can contact us via email: gonzalez.alma(at)ugto.mx / arestrada(at)fisica.uaz.edu.mx / ej.rodrigueznachez(at)ugto.mx
+You can contact us via email: gonzalez.alma(at)ugto.mx / arestrada(at)fisica.uaz.edu.mx / ej.rodrigueznachez(at)ugto.mx / alrakomala(at)gmail.com
