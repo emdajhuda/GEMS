@@ -8,7 +8,7 @@ tests/
 ├── coaddmaker/
 │   ├── test_custom_coadd.py
 │   └── test_custom_inject_coadd.py
-├── coherentinjection/
+├── consistentinjection/
 │   └── test_injection.py
 ├── py/
 │   ├── test_exposure.py

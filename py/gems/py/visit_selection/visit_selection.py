@@ -20,11 +20,15 @@ class VisitSL():
         Parameters
         ----------
         loc_data : tuple
-                Either (RA, Dec) in degrees, or (tract, patch) integers.
+                Location of interest, interpreted according to `type_loc_data`:
+                (RA, Dec) in degrees, (tract, patch) integers, or
+                (ra_min, ra_max, dec_min, dec_max) in degrees.
         band : str
                 Photometric band name (e.g., 'r', 'i', etc.)
-        sky_coordinates : bool
-                If True, loc_data is (RA, Dec). If False, loc_data is (tract, patch).
+        type_loc_data : str, ('sky_coordinates', 'patch_area', 'area')
+                'sky_coordinates' (default): loc_data is (RA, Dec).
+                'patch_area': loc_data is (tract, patch).
+                'area': loc_data is (ra_min, ra_max, dec_min, dec_max).
         repository : str
                 Path or name of the Butler repository (e.g., "dp1").
         collections : str or list
@@ -385,7 +389,6 @@ def visit_dataset(
     detectors=None,
     timespan=None,
     visit_ids=None,
-    filter_by_region=True,
     instrument="LSSTComCam",
 ):
     """
@@ -414,8 +417,6 @@ def visit_dataset(
         Restrict query to a specific time interval.
     visit_ids : list of int, optional
         Restrict query to specific visit IDs.
-    filter_by_region : bool, optional
-        If True, use visit_detector_region to filter visits.
     instrument : str, optional
         Instrument name (default: "LSSTComCam").
 

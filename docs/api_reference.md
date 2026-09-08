@@ -23,7 +23,7 @@ autodoc/autosummary or `mkdocstrings`) can be added under `docs/` later; see
 | Coadd plots | `plot_custom_coadd`, `plot_original_coadd`, `normalize_image`, `make_rgb_image`, `compare_rgb_coadds` | `gems.utils.plot.coadd_plot` |
 | Exposure plots | `fix_wcsaxes_labels`, `extract_array`, `normalize_axes`, `render_image`, `overlay_sky_point`, `plot_histogram`, `injection_steps`, `plot_exposures_full` | `gems.utils.plot.exposure_plot` |
 | Sky | `tract_patch`, `patch_center`, `get_patch_center_radius`, `RA_to_degree`, `Dec_to_degree`, `skywcs_to_astropy` | `gems.utils.sky.sky` |
-| Injection | `make_serializable`, `measure_quality`, `create_crowded_injection_catalog`, `apply_correction_from_data`, `apply_correction_to_stamp`, `inject_stamp`, `main_inject_stamp`, `apply_correction_from_exposureF`, `save_visit_images` | `gems.coherentinjection.injection` |
+| Injection | `make_serializable`, `measure_quality`, `create_crowded_injection_catalog`, `apply_correction_from_data`, `apply_correction_to_stamp`, `inject_stamp`, `main_inject_stamp`, `apply_correction_from_exposureF`, `save_visit_images` | `gems.consistentinjection.injection` |
 | Tools | `progressbar`, `setup_logger`, `_run`, `get_butler_location`, `mjds_to_dates`, `diff_AlardLupton`, `warp_img` | `gems.utils.tools.tools` |
 
 All of the above are importable directly from the top level, e.g.:

@@ -33,8 +33,7 @@ def custom_warp(
     datasetType: str = "visit_image",
     skymap_name: str = "lsst_cells_v1",
     # Optional advanced features
-    filter_by_patch: bool = True,        # use tract/patch to restrict visits
-    filter_by_region: bool = False,      # use visit_detector_region (if available)
+    type_loc_data: str = 'sky_coordinates',  # 'sky_coordinates', 'patch_area', or 'area'
     detectors: list = None,              # allowed detectors
     LOGDIR: str = "warps",
     out: bool = True,
@@ -66,8 +65,7 @@ def custom_warp(
         instrument=instrument,
         datasetType=datasetType,
         skymap_name=skymap_name,
-        filter_by_patch=filter_by_patch,
-        filter_by_region=filter_by_region,
+        type_loc_data=type_loc_data,
         detectors=detectors,
         logger=logger
     )
@@ -103,8 +101,7 @@ def select_visits(
     datasetType: str = "visit_image",
     skymap_name: str = "lsst_cells_v1",
     # Optional advanced features
-    filter_by_patch: bool = True,        # use tract/patch to restrict visits
-    filter_by_region: bool = False,      # use visit_detector_region (if available)
+    type_loc_data: str = 'sky_coordinates',  # 'sky_coordinates', 'patch_area', or 'area'
     detectors: list = None,              # allowed detectors
     logger: logging.Logger = None,):
     """
@@ -134,9 +131,8 @@ def select_visits(
     # Query all visits for this band + instrument
     visit_refs = visit_dataset(butler=butler,
                                band=band, loc_data=loc,
-                               use_patch_area=filter_by_patch,
-                               filter_by_region=filter_by_region,
-                               detectors=detectors, 
+                               type_loc_data=type_loc_data,
+                               detectors=detectors,
                                instrument=instrument)
     if logger: logger.info(f"[SELECT] Candidate visits: {len(visit_refs)}")
 

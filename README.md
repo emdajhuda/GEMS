@@ -48,7 +48,7 @@ organized in four layers (see [docs/architecture.md](docs/architecture.md) for a
    remote and local repositories.
 2. **Selection helpers** (`gems.py`) — convenience functions to select, load, and
    combine visits and exposures.
-3. **Core processing** (`gems.coaddmaker`, `gems.coherentinjection`) — custom coadd
+3. **Core processing** (`gems.coaddmaker`, `gems.consistentinjection`) — custom coadd
    construction, leave-one-out/rotation validation, and synthetic source injection.
 4. **Diagnostics** (`gems.utils.plot`) — plotting utilities for exposures, coadds,
    statistics, and injection results.
@@ -63,7 +63,7 @@ across the layers above.
 GEMS/
 ├── py/gems/            # the installable package (import as `import gems`)
 │   ├── coaddmaker/       # custom coadd construction, injection-aware pipelines
-│   ├── coherentinjection/  # synthetic strong-lensing source injection
+│   ├── consistentinjection/  # synthetic strong-lensing source injection
 │   ├── py/               # visit/exposure selection convenience layer
 │   │   ├── exposure/      # load, save, normalize, cut out exposures
 │   │   └── visit_selection/  # VisitSL: select/combine visits by sky position

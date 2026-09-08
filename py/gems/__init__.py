@@ -6,7 +6,7 @@ from .coaddmaker.custom_coadd import custom_coadd_filter, custom_coadd_multiband
 from .coaddmaker.custom_inject_coadd import coadd_exposures_pipeline, coadd_exposures_pipeline, leave_one_out_residual, validate_rotation
 
 #CoherentInjection
-from .coherentinjection.injection import make_serializable, measure_quality, create_crowded_injection_catalog, apply_correction_from_data,\
+from .consistentinjection.injection import make_serializable, measure_quality, create_crowded_injection_catalog, apply_correction_from_data,\
                                        apply_correction_to_stamp, inject_stamp, main_inject_stamp, apply_correction_from_exposureF,\
                                        save_visit_images
 

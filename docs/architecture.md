@@ -19,7 +19,7 @@ flowchart TD
     subgraph Core["Core processing"]
         E["custom_coadd_filter / custom_coadd_multiband\ngems.coaddmaker.custom_coadd"]
         F["coadd_exposures_pipeline\nleave_one_out_residual / validate_rotation\ngems.coaddmaker.custom_inject_coadd"]
-        G["inject_stamp / main_inject_stamp\ngems.coherentinjection.injection"]
+        G["inject_stamp / main_inject_stamp\ngems.consistentinjection.injection"]
         H["custom_warp / select_visits\ngems.utils.warp"]
     end
     C --> E
@@ -66,7 +66,7 @@ flowchart TD
    - `gems.coaddmaker` builds custom, filter-aware coadds from a selected set of
      visits (`custom_coadd`), then runs injection-aware coadd pipelines and validation
      (leave-one-out residuals, rotation checks) in `custom_inject_coadd`.
-   - `gems.coherentinjection` injects synthetic strong-lensing sources into exposures
+   - `gems.consistentinjection` injects synthetic strong-lensing sources into exposures
      (via `lsst.source.injection`) to test recovery/detectability.
    - `gems.utils.warp` re-projects ("warps") exposures onto a common sky grid ahead of
      coaddition.

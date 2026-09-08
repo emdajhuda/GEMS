@@ -1,5 +1,5 @@
 # vera rubin v1.0
-# source_injection/injection.py
+# consistentinjection/injection.py
 # see:
 # https://pipelines.lsst.io/v/daily/modules/lsst.source.injection/index.html
 # https://dp1.lsst.io/tutorials/notebook/105/notebook-105-4.html
@@ -592,8 +592,10 @@ def main_inject_stamp(
     butler : lsst.daf.butler.Butler
         Butler instance for accessing LSST data.
     loc : tuple
-        If `sky_coordinates=True`: (ra, dec) in degrees.  
-        If `sky_coordinates=False`: (tract, patch).
+        Location of interest, interpreted according to `type_loc_data`:
+        - 'sky_coordinates': (ra, dec) in degrees.
+        - 'patch_area': (tract, patch).
+        - 'area': (ra_min, ra_max, dec_min, dec_max) in degrees.
     band : str
         Filter band (e.g. "r", "i").
     stamp_paths : list of str
@@ -602,12 +604,10 @@ def main_inject_stamp(
         Magnitudes of the sources to inject.
     ra_list, dec_list : list of float
         RA/Dec positions for the injected sources (degrees).
-    sky_coordinates : bool, optional
-        If True, loc is interpreted as (ra, dec).  
-        If False, loc is interpreted as (tract, patch).
-    use_patch_area : bool, optional
-        If False (default), uses only the central coordinate of the patch.  
-        If True, uses the full patch area (as in coadd construction).
+    type_loc_data : str, ('sky_coordinates', 'patch_area', 'area'), optional
+        'sky_coordinates' (default) interprets `loc` as (ra, dec).
+        'patch_area' interprets `loc` as (tract, patch); the patch center is used.
+        'area' interprets `loc` as (ra_min, ra_max, dec_min, dec_max); the center is used.
     detectors : list of int, optional
         Restrict query to specific detectors.
     timespan : lsst.daf.butler.Timespan, optional
@@ -689,7 +689,7 @@ def main_inject_stamp(
         table_info = {}
         table_info['Parameters'] = {
             'visit_name': visit_name,
-            'use_patch_area': use_patch_area,
+            'type_loc_data': type_loc_data,
             'points': list(zip(ra_list, dec_list)),
             'detectors': detectors,
             'timespan': timespan,

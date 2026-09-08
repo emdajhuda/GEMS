@@ -54,8 +54,8 @@ def load_custom_coadd_from_file(info_txt_path):
 # higher-level helpers
 # ------------------------
 def custom_coadd_filter(loc_data: tuple,
-                        bands: str = 'ugrizy', 
-                        sky_coordinates: bool = True, 
+                        bands: str = 'ugrizy',
+                        type_loc_data: str = 'sky_coordinates',
                         butler: Butler = None,
                         repository: str = "dp1",
                         collections: str = "LSSTComCam/DP1",
@@ -104,7 +104,7 @@ def custom_coadd_filter(loc_data: tuple,
     # ----------------------------
     visits_selected_list, df_metrics_list = [], []
     for band in bands:
-        visit_instance = VisitSL(loc_data, band, butler=butler, sky_coordinates=sky_coordinates)
+        visit_instance = VisitSL(loc_data, band, butler=butler, type_loc_data=type_loc_data)
         df_metrics, visits_selected = visit_instance.filt_visit(
             statistics=statistics,
             type_coadd=type_coadd,
@@ -133,7 +133,7 @@ def custom_coadd_filter(loc_data: tuple,
             skymap_name=skymap_name,
             remote_collection=collections,
             my_collection_name=my_collection_name,
-            sky_coordinates=sky_coordinates,
+            type_loc_data=type_loc_data,
             SAVE_FITS=False,
             out=out)
     
@@ -150,7 +150,7 @@ def custom_coadd_multiband(BUTLER_PATH: str,
                            skymap_name: str = "lsst_cells_v1",
                            remote_collection: str = "LSSTComCam/DP1",
                            my_collection_name: str = 'custom_coadd',
-                           sky_coordinates: bool = True,
+                           type_loc_data: str = 'sky_coordinates',
                            SAVE_FITS: bool = False,
                            out: bool = False,
                            meta_data_name: str = "custom_coadd_info"):
@@ -163,8 +163,11 @@ def custom_coadd_multiband(BUTLER_PATH: str,
     # Open butler
     _butler = Butler(BUTLER_PATH, collections=remote_collection)
 
-    # Get tract and patch either from sky coords or directly
-    my_tract, my_patch = tract_patch(_butler, loc_data[0], loc_data[1], sequential_index=True) if sky_coordinates else loc_data
+    # Get tract and patch either from sky coords or directly (patch_area: loc_data is already (tract, patch))
+    if type_loc_data == 'sky_coordinates':
+        my_tract, my_patch = tract_patch(_butler, loc_data[0], loc_data[1], sequential_index=True)
+    else:
+        my_tract, my_patch = loc_data
 
     # Pipeline definition
     # ----------------------------
