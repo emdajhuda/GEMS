@@ -566,8 +566,7 @@ def main_inject_stamp(
         REPO_SAVE: str = '', 
         collection_save: str = "local_with_injection",
         run_name_save: str = "direct_injected_run",
-        sky_coordinates=True,
-        use_patch_area=False,
+        type_loc_data='sky_coordinates',
         detectors=None,
         timespan=None,
         visit_ids=None,
@@ -660,11 +659,15 @@ def main_inject_stamp(
         raise
 
     # Resolve coordinates
-    if sky_coordinates:
+    if type_loc_data=='sky_coordinates':
         ra_deg, dec_deg = loc
-    else:
+    elif type_loc_data=='patch_area':
         tract, patch = loc
         ra_deg, dec_deg = patch_center(butler, tract, patch, sequential_index=True)
+    elif type_loc_data=='area':
+        ra_min_deg, ra_max_deg, dec_min_deg, dec_max_deg = loc
+        ra_deg = (ra_min_deg + ra_max_deg)/2
+        dec_deg = (dec_min_deg + dec_max_deg)/2
     loc = (ra_deg, dec_deg)
     if info: print(f"[INFO] Injection on sky coordinates: RA={ra_deg}, Dec={dec_deg}")
 
@@ -673,7 +676,7 @@ def main_inject_stamp(
         butler,
         band,
         loc,
-        use_patch_area=use_patch_area,
+        type_loc_data='sky_coordinates',
         detectors=detectors,
         timespan=timespan,
         visit_ids=visit_ids

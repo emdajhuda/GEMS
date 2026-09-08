@@ -4,17 +4,18 @@
 
 import os, sys
 import numpy as np
+import lsst.sphgeom as sphgeom
 
 from ...utils.sky.sky import tract_patch, patch_center
 
 class VisitSL():
     """ 
-    Class to query visits based on sky coordinates or tract/patch.
+    Class to query visits based on area, sky coordinates or tract/patch.
     """
 
     # Class attribute
     ###################################################################################################
-    def __init__(self, loc_data, band, sky_coordinates=True, repository="dp1", collections="LSSTComCam/DP1", butler=None):
+    def __init__(self, loc_data, band, type_loc_data='sky_coordinates', repository="dp1", collections="LSSTComCam/DP1", butler=None):
         """
         Parameters
         ----------
@@ -30,19 +31,25 @@ class VisitSL():
                 Collection or list of collections to query from (e.g., "LSSTComCam/DP1").
         """
         self.band = band
+
         if butler:
             self.butler = butler
         else:
             from butler.butler import ExpButler
             self.butler = ExpButler(repository=repository, collections=collections)._create_butler()
 
-        if sky_coordinates:
+        if type_loc_data=='sky_coordinates':
             self.ra_deg, self.dec_deg = loc_data
-        else:
-            tract, patch = loc_data
-            ra_deg, dec_deg = patch_center(self.butler, tract, patch, sequential_index=True)
+        elif type_loc_data=='patch_area':
+            self.tract, self.patch = loc_data
+            ra_deg, dec_deg = patch_center(self.butler, self.tract, self.patch, sequential_index=True)
             self.ra_deg = ra_deg
             self.dec_deg = dec_deg
+        elif type_loc_data=='area':
+            self.ra_min_deg, self.ra_max_deg, self.dec_min_deg, self.dec_max_deg = loc_data
+            self.ra_deg = (self.ra_min_deg + self.ra_max_deg)/2
+            self.dec_deg = (self.dec_min_deg + self.dec_max_deg)/2
+            self.region = sphgeom.Region.from_ivoa_pos(f"POLYGON('ICRS', {self.ra_min_deg}, {self.dec_min_deg}, {self.ra_min_deg}, {self.dec_max_deg}, {self.ra_max_deg}, {self.dec_max_deg}, {self.ra_max_deg}, {self.dec_min_deg})")
 
     def __repr__(self):
         return f"<Visit band={self.band}, RA={self.ra_deg:.4f}, Dec={self.dec_deg:.4f}>"
@@ -50,8 +57,7 @@ class VisitSL():
     # ------------------------------------------------------------
     # Get images overlapping a particular sky position
     # ------------------------------------------------------------
-    def query_visit_image(self, detectors=None, timespan=None, visit_ids=None, use_patch_area=False,
-                          filter_by_region=True, instrument="LSSTComCam"):
+    def query_visit_image(self, detectors=None, timespan=None, visit_ids=None, type_loc_data='sky_coordinates', instrument="LSSTComCam"):
         """
         Identify images overlapping a particular sky position and select one to inject sources into.
 
@@ -65,11 +71,11 @@ class VisitSL():
             If True, query returns lazy references instead of fully loaded datasets
         visit_ids : list[int] or None
             Optional list of visit IDs to filter
-        use_patch_area : bool
-            If True, query uses the entire patch area (like coadd construction);
-        filter_by_region: bool
-            If True, query uses visit_detector_region.region OVERLAPS POINT to filter visits;
-
+           loc_data : tuple
+        type_loc_data : str, ('sky_coordinates', 'patch_area', 'area')
+            'sky_coordinates' use ra and dec to locate visits in that area.
+            'patch_area' use tract and patch to locate visits in that area.
+            'area' creates a rectangle with ra_min, ra_max, dec_min, dec_max to locate visits in that area.
         Returns
         -------
         list
@@ -87,15 +93,18 @@ class VisitSL():
         query_parts.append(f"instrument='{instrument}'")
 
         # Spatial filter: by point or by patch
-        if use_patch_area:
-            # Get tract and patch for RA/Dec
+        if type_loc_data=='sky_coordinates':
+            query_parts.append(f"visit_detector_region.region OVERLAPS POINT( {self.ra_deg} , {self.dec_deg} )")
+            
+        # Get tract and patch for RA/Dec
+        elif type_loc_data=='patch_area':
             tract, patch = tract_patch(self.butler, self.ra_deg, self.dec_deg, sequential_index=True)
             query_parts.append(f"tract={tract}")
             query_parts.append(f"patch={patch}")
         
-        if filter_by_region:
+        elif type_loc_data=='area':
             # Point query
-            query_parts.append(f"visit_detector_region.region OVERLAPS POINT({self.ra_deg}, {self.dec_deg})")
+            query_parts.append(f"visit_detector_region.region OVERLAPS {self.region}")
 
         # Detector filter (if None, query all)
         if detectors is not None:
@@ -367,11 +376,11 @@ class VisitSL():
 ########### EXTRA FUNCTIONS ##############################################################################
 
 def visit_dataset(
-    butler,
-    band,
-    loc_data,
+    butler=None,
+    band=['u', 'i', 'r', 'g'],
+    loc_data=(52.9904715 , -28.3993699),
     repository=None,
-    use_patch_area=False,
+    type_loc_data='sky_coordinates',
     collections="LSSTComCam/DP1",
     detectors=None,
     timespan=None,
@@ -392,11 +401,13 @@ def visit_dataset(
         Location of interest:
         - If (ra, dec) in degrees: query visits covering this position.
         - If (tract, patch): query visits overlapping that patch.
+        - If (ra_min, ra_max, dec_min, dec_max) in degrees: query visits overlaping a rectangle with that corners.
     repository: str
         Path to the LSST data repository
-    use_patch_area : bool, optional
-        If True, use the full patch area for the query. 
-        If False (default), use only the central coordinate.
+    type_loc_data : str, ('sky_coordinates', 'patch_area', 'area')
+        'sky_coordinates' use ra and dec to locate visits in that area.
+        'patch_area' use tract and patch to locate visits in that area.
+        'area' creates a rectangle with ra_min, ra_max, dec_min, dec_max to locate visits in that area.
     detectors : list of int, optional
         Restrict query to specific detectors.
     timespan : lsst.daf.butler.Timespan, optional
@@ -413,13 +424,21 @@ def visit_dataset(
     visit_refs : list of lsst.daf.butler.DeferredDatasetHandle
         References to the matching visit-level exposures.
     """
-
+    valid_type_loc_data = ['sky_coordinates', 'patch_area', 'area']
+    
+    if type_loc_data not in valid_type_loc_data:
+        raise ValueError(
+            f"Tipo de búsqueda '{type_loc_data}' no disponible.\n"
+            f"Opciones disponibles: {', '.join(valid_type_loc_data)}"
+        )
+        
     if butler:
         # Use an existing Butler
         visit_obj = VisitSL(
             loc_data=loc_data,
             butler=butler,
             band=band,
+            type_loc_data=type_loc_data,
         )
     elif repository:
         # Use a repository path
@@ -428,6 +447,7 @@ def visit_dataset(
             repository=repository,
             band=band,
             collections=collections,
+            type_loc_data=type_loc_data,
         )
     else:
         print('[Error] A butler or repository path must be provided.')
@@ -437,8 +457,7 @@ def visit_dataset(
     visit_refs = visit_obj.query_visit_image(
         detectors=detectors,
         visit_ids=visit_ids,
-        use_patch_area=use_patch_area,
-        filter_by_region=filter_by_region,
+        type_loc_data=type_loc_data,
         timespan=timespan,
         instrument=instrument
     )
