@@ -33,7 +33,7 @@ from .utils.plot.array_plot import pixel_intensity
 from .utils.plot.butler_plot import filt_plot, display_ccds_and_cutout, plot_compare
 from .utils.plot.coadd_plot import plot_custom_coadd, plot_original_coadd, normalize_image, make_rgb_image, compare_rgb_coadds
 from .utils.plot.exposure_plot import fix_wcsaxes_labels, extract_array, normalize_axes, render_image, overlay_sky_point,\
-    plot_histogram, injection_steps, plot_exposures_full
+    plot_histogram, injection_steps, injection_steps_AlardLupton, plot_exposures_full
 # Tools
 from .utils.tools.tools import progressbar, setup_logger, _run, get_butler_location, mjds_to_dates, diff_AlardLupton, warp_img
 # Sky
@@ -59,7 +59,7 @@ __all__ = [
     'general', 'FigParam', 'LineParam', 'axesParam', 'labelParam', 'legendParam', 'fontParam', 'get_colors', 'StatisticsPlots',
     'pixel_intensity', 'filt_plot', 'display_ccds_and_cutout', 'plot_compare', 'plot_custom_coadd', 'plot_original_coadd',
     'normalize_image', 'make_rgb_image', 'compare_rgb_coadds', 'fix_wcsaxes_labels', 'extract_array', 'normalize_axes', 'render_image',
-    'overlay_sky_point', 'plot_histogram', 'injection_steps', 'plot_exposures_full',
+    'overlay_sky_point', 'plot_histogram', 'injection_steps', 'injection_steps_AlardLupton', 'plot_exposures_full',
     # Sky
     'tract_patch', 'patch_center', 'get_patch_center_radius', 'RA_to_degree', 'Dec_to_degree', 'skywcs_to_astropy',
     # Injection

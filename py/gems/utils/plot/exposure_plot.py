@@ -14,6 +14,7 @@ from astropy.wcs import WCS
 afwDisplay.setDefaultBackend('matplotlib')
 
 from ..sky.sky import skywcs_to_astropy
+from ..tools.tools import diff_AlardLupton
 
 ###################################################################################################
 
@@ -102,44 +103,11 @@ def plot_histogram(ax, img, filter_nan=True):
 
 # Top-level
 # ---------------------------------------------------------------------
-def injection_steps(before, after, points, diference=True,
-                    grid=True, add_colorbar=True, percentiles=[5, 95],
-                    cutout_radius_arcsec=None,
-                    xlim_world=None, ylim_world=None,
-                    save_path=None, names=['Before', 'After', 'Difference'],
-                    extent=None):
+def _resolve_exposure_pair(before, after):
     """
-    Compare exposures before/after injection and plot with WCS coordinates.
-
-    Automatically detects whether inputs are LSST ExposureF objects
-    or Astropy (FITS/CCDData-like) objects.
-
-    Parameters
-    ----------
-    before : lsst.afw.image.ExposureF or Astropy object
-        Exposure before injection.
-    after : lsst.afw.image.ExposureF or Astropy object
-        Exposure after injection.
-    points : list of [ra, dec]
-        Positions of injected sources in degrees.
-    grid : bool, optional
-        If True, overlay a coordinate grid.
-    percentiles : list, optional
-        Percentiles for image scaling (default = [5, 95]).
-    cutout_radius_arcsec : float, optional
-        If set, zoom around the first injected point by this radius (arcsec).
-    xlim_world : tuple, optional
-        Manual RA limits (deg), e.g. (RA_min, RA_max).
-    ylim_world : tuple, optional
-        Manual Dec limits (deg), e.g. (Dec_min, Dec_max).
-    save_path : str, optional
-        If provided, the figure will be saved at this path instead of being displayed.
-    names :  list, optional
-        List of panel Name, default, ['Before', 'After', 'Difference']
+    Detect whether before/after are LSST ExposureF objects or Astropy
+    (FITS/CCDData-like) objects, and return (wcs_for_plot, before_data, after_data).
     """
-    labelpoint = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-
-    # Detect type automatically
     if hasattr(after, "getWcs"):  # LSST object
         try:
             wcs_for_plot = after.getWcs()
@@ -158,11 +126,22 @@ def injection_steps(before, after, points, diference=True,
     else:
         raise TypeError("Unsupported input type. Must be LSST ExposureF or Astropy HDU/CCDData.")
 
+    return wcs_for_plot, before_data, after_data
+
+def _plot_before_after_diff(before_data, after_data, diff_data, wcs_for_plot, points, diference=True,
+                            grid=True, add_colorbar=True, percentiles=[5, 95],
+                            cutout_radius_arcsec=None,
+                            xlim_world=None, ylim_world=None,
+                            save_path=None, names=['Before', 'After', 'Difference'],
+                            extent=None):
+    """Render the Before/After/Difference panels shared by injection_steps* functions."""
+    labelpoint = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+
     # Build image panels
     images = [
         (before_data, names[0]),
         (after_data, names[1]),
-        (after_data - before_data, names[2])
+        (diff_data, names[2])
     ]
 
     # Plotting
@@ -230,6 +209,112 @@ def injection_steps(before, after, points, diference=True,
     # Free memory after plotting
     plt.close(fig)
     return None
+
+def injection_steps(before, after, points, diference=True,
+                    grid=True, add_colorbar=True, percentiles=[5, 95],
+                    cutout_radius_arcsec=None,
+                    xlim_world=None, ylim_world=None,
+                    save_path=None, names=['Before', 'After', 'Difference'],
+                    extent=None):
+    """
+    Compare exposures before/after injection and plot with WCS coordinates.
+
+    Automatically detects whether inputs are LSST ExposureF objects
+    or Astropy (FITS/CCDData-like) objects. The Difference panel is a
+    plain pixel subtraction (after - before); see `injection_steps_AlardLupton`
+    for a PSF-matched (Alard-Lupton) difference instead.
+
+    Parameters
+    ----------
+    before : lsst.afw.image.ExposureF or Astropy object
+        Exposure before injection.
+    after : lsst.afw.image.ExposureF or Astropy object
+        Exposure after injection.
+    points : list of [ra, dec]
+        Positions of injected sources in degrees.
+    grid : bool, optional
+        If True, overlay a coordinate grid.
+    percentiles : list, optional
+        Percentiles for image scaling (default = [5, 95]).
+    cutout_radius_arcsec : float, optional
+        If set, zoom around the first injected point by this radius (arcsec).
+    xlim_world : tuple, optional
+        Manual RA limits (deg), e.g. (RA_min, RA_max).
+    ylim_world : tuple, optional
+        Manual Dec limits (deg), e.g. (Dec_min, Dec_max).
+    save_path : str, optional
+        If provided, the figure will be saved at this path instead of being displayed.
+    names :  list, optional
+        List of panel Name, default, ['Before', 'After', 'Difference']
+    """
+    wcs_for_plot, before_data, after_data = _resolve_exposure_pair(before, after)
+    diff_data = after_data - before_data
+
+    return _plot_before_after_diff(
+        before_data, after_data, diff_data, wcs_for_plot, points,
+        diference=diference, grid=grid, add_colorbar=add_colorbar, percentiles=percentiles,
+        cutout_radius_arcsec=cutout_radius_arcsec, xlim_world=xlim_world, ylim_world=ylim_world,
+        save_path=save_path, names=names, extent=extent
+    )
+
+def injection_steps_AlardLupton(before, after, points, warp=True, diference=True,
+                    grid=True, add_colorbar=True, percentiles=[5, 95],
+                    cutout_radius_arcsec=None,
+                    xlim_world=None, ylim_world=None,
+                    save_path=None, names=['Before', 'After', 'Difference (AL)'],
+                    extent=None):
+    """
+    Compare exposures before/after injection and plot with WCS coordinates.
+
+    Same as `injection_steps`, but the Difference panel is computed with LSST's
+    PSF-matched Alard-Lupton image subtraction (`diff_AlardLupton`) instead of a
+    plain pixel subtraction. Because `AlardLuptonSubtractTask` needs a mask, PSF
+    and WCS, `before`/`after` must be LSST ExposureF objects (Astropy inputs are
+    not supported here).
+
+    Parameters
+    ----------
+    before : lsst.afw.image.ExposureF
+        Template exposure (before injection).
+    after : lsst.afw.image.ExposureF
+        Science exposure (after injection).
+    points : list of [ra, dec]
+        Positions of injected sources in degrees.
+    warp : bool, optional
+        If True (default), warp `before` onto `after`'s WCS/PSF before subtracting,
+        as done by `diff_AlardLupton`.
+    grid : bool, optional
+        If True, overlay a coordinate grid.
+    percentiles : list, optional
+        Percentiles for image scaling (default = [5, 95]).
+    cutout_radius_arcsec : float, optional
+        If set, zoom around the first injected point by this radius (arcsec).
+    xlim_world : tuple, optional
+        Manual RA limits (deg), e.g. (RA_min, RA_max).
+    ylim_world : tuple, optional
+        Manual Dec limits (deg), e.g. (Dec_min, Dec_max).
+    save_path : str, optional
+        If provided, the figure will be saved at this path instead of being displayed.
+    names :  list, optional
+        List of panel Name, default, ['Before', 'After', 'Difference (AL)']
+    """
+    if not (hasattr(before, "getWcs") and hasattr(after, "getWcs")):
+        raise TypeError(
+            "injection_steps_AlardLupton requires LSST ExposureF objects "
+            "(before/after) with mask, PSF and WCS."
+        )
+
+    wcs_for_plot, before_data, after_data = _resolve_exposure_pair(before, after)
+
+    diff_exp = diff_AlardLupton(templateExposure=before, scienceExposure=after, warp=warp)
+    diff_data = extract_array(diff_exp)
+
+    return _plot_before_after_diff(
+        before_data, after_data, diff_data, wcs_for_plot, points,
+        diference=diference, grid=grid, add_colorbar=add_colorbar, percentiles=percentiles,
+        cutout_radius_arcsec=cutout_radius_arcsec, xlim_world=xlim_world, ylim_world=ylim_world,
+        save_path=save_path, names=names, extent=extent
+    )
 
 def plot_exposures_full(
     exposures,
