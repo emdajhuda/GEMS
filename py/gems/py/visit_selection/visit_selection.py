@@ -102,7 +102,7 @@ class VisitSL():
             
         # Get tract and patch for RA/Dec
         elif type_loc_data=='patch_area':
-            tract, patch = tract_patch(self.butler, self.ra_deg, self.dec_deg, sequential_index=True)
+            tract, patch = self.tract, self.patch
             query_parts.append(f"tract={tract}")
             query_parts.append(f"patch={patch}")
         
