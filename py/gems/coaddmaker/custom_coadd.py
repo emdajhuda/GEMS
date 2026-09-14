@@ -180,11 +180,8 @@ def custom_coadd_multiband(BUTLER_PATH: str,
     pipeline.addConfigOverride('makeDirectWarp', 'useVisitSummaryPsf', False)
     pipeline.addConfigOverride('makeDirectWarp', 'useVisitSummaryPhotoCalib', False)
     pipeline.addConfigOverride('makeDirectWarp', 'useVisitSummaryWcs', False)
-    # DP1 visit_summary does not contain all PSF-quality fields
-    # expected by PsfWcsSelectImagesTask in v30 (e.g. starEMedian).
-    # Disable the pre-warp detector selection.
-    pipeline.addConfigOverride('makeDirectWarp', 'doSelectPreWarp', False)
     pipeline.addConfigOverride('makeDirectWarp', 'connections.calexp_list', 'visit_image')
+    pipeline.addConfigOverride('makeDirectWarp', 'doSelectPreWarp', False)
 
     # Bands auto-detection
     # ----------------------------
