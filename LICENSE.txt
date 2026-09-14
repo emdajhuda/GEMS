@@ -1,6 +1,7 @@
 MIT License
 
-Copyright (c) 2024 Barak Shoshany
+Copyright (c) 2026 Alma Xochitl Gonzalez Morales, Armando Estrada Roque,
+Emmanuel Juda Rodriguez Nachez, Karla Adriana Alamo Martinez
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

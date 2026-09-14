@@ -3,7 +3,7 @@ requires = ["setuptools>=61"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "gems"
+name = "gems-astro"
 version = "0.1.0"
 description = "GEMS (Good-Exposure Metric Selection for strong-lensing coadds): diagnostic tools to validate Vera C. Rubin Observatory / LSST observations for strong lensing source detection"
 readme = "README.md"

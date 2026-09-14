@@ -39,7 +39,7 @@ class VisitSL():
         if butler:
             self.butler = butler
         else:
-            from butler.butler import ExpButler
+            from ...utils.butler.butler import ExpButler
             self.butler = ExpButler(repository=repository, collections=collections)._create_butler()
 
         if type_loc_data=='sky_coordinates':
