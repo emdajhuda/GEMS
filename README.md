@@ -108,26 +108,28 @@ Quick start (full walkthrough with troubleshooting notes in
    [LSST Science Pipelines installation guide](https://pipelines.lsst.io/install/index.html)
    (conda-based) or use the LSST `sciplat-lab` container image.
 
-2. **Clone this repository** into that environment:
+2. **Install GEMS**, either:
 
-   ```bash
-   git clone https://github.com/emdajhuda/GEMS.git gems
-   cd gems
-   ```
+   - **from PyPI**, published as [`gems-astro`](https://pypi.org/project/gems-astro/)
+     (simplest if you just want the library):
 
-3. **Install GEMS and its Python dependencies** in editable mode:
+     ```bash
+     pip install gems-astro
+     ```
 
-   ```bash
-   pip install -e .
-   ```
+   - **from source**, if you also want the example notebooks or plan to edit the code:
 
-4. **Verify the installation:**
+     ```bash
+     git clone https://github.com/emdajhuda/GEMS.git gems
+     cd gems
+     pip install -e .
+     ```
 
-   ```bash
-   python -c "import gems; print(gems.__name__, 'OK')"
-   ```
+   Either way, GEMS's own Python dependencies (NumPy, Matplotlib, Astropy, pandas,
+   cycler) are installed automatically.
 
-5. Open any notebook under [`examples/`](examples/) to get started.
+3. If you installed from source, open any notebook under [`examples/`](examples/) to
+   get started.
 
 ## Usage / examples
 

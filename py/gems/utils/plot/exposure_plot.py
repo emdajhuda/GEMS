@@ -146,7 +146,7 @@ def _plot_before_after_diff(before_data, after_data, diff_data, wcs_for_plot, po
 
     # Plotting
     ncols = 3 if diference else 2
-    fig = plt.figure(figsize=(ncols*5, 5))
+    fig = plt.figure(figsize=(ncols*6, 5))
     for i, (data, title_str) in enumerate(images[:ncols:], start=1):
         ax = fig.add_subplot(1, 3, i, projection=wcs_for_plot)
 
@@ -163,7 +163,7 @@ def _plot_before_after_diff(before_data, after_data, diff_data, wcs_for_plot, po
         im = render_image(ax, data, title_str, "percentiles", percentiles, cmap="gray", extent=extent)
 
         if add_colorbar:
-            fig.colorbar(im, ax=ax, fraction=0.046, pad=0.04, label='Intensity')
+            fig.colorbar(im, ax=ax, fraction=0.046, pad=0.1, label='Intensity')
 
         if grid:
             ax.coords.grid(color="white", ls="dotted")
@@ -197,8 +197,8 @@ def _plot_before_after_diff(before_data, after_data, diff_data, wcs_for_plot, po
         if ylim_world is not None:
             ax.set_ylim(*ylim_world)
 
-    plt.tight_layout()
-    
+    plt.tight_layout(w_pad=4.0)
+
     # Save or show the figure depending on argument
     if save_path is not None:
         plt.savefig(save_path, dpi=150, bbox_inches="tight")
